@@ -1,0 +1,45 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/SingleChain/InterfaceSingleChain.sol": "Single"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/SingleChain/InterfaceSingleChain.sol": {
+			"keccak256": "0x87021951a6a28db69570338d8f8f0db9735798ad9ea3c6d19aee5a1534b4a3c0",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://479f1f8abbdccbe755427c8ddc4c917b6cb6e8014a2635e34c26c1cc2597748b",
+				"dweb:/ipfs/QmQh9KBbSXHpFJ6WqKRQ3EjLdZZXiA1YMJEvXS289W3Rey"
+			]
+		}
+	},
+	"version": 1
+}

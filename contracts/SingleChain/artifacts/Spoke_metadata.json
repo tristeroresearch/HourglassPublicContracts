@@ -1,0 +1,998 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "ReentrancyGuardReentrantCall",
+				"type": "error"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "sell_token",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "buy_token",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint24",
+						"name": "index",
+						"type": "uint24"
+					}
+				],
+				"name": "CanceledOrder",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sell_token",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "buy_token",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "obligation",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "order_amount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "epoch",
+						"type": "uint256"
+					}
+				],
+				"name": "MakerDefaulted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sell_token",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "buy_token",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "obligation",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "order_amount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "epoch",
+						"type": "uint256"
+					}
+				],
+				"name": "MakerPulled",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "sell_token",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "buy_token",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint96",
+						"name": "_quantity",
+						"type": "uint96"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "maker",
+						"type": "bool"
+					}
+				],
+				"name": "OrderPlaced",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "msg",
+						"type": "string"
+					}
+				],
+				"name": "Print",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sell_token",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "buy_token",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "epoch",
+						"type": "uint256"
+					}
+				],
+				"name": "Resolved",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "Value",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sell_token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "buy_token",
+						"type": "address"
+					}
+				],
+				"name": "CanResolve",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "MARGIN_BPS",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "REPO_BPS",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sell_token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "buy_token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint24",
+						"name": "epoch",
+						"type": "uint24"
+					}
+				],
+				"name": "canWithdraw",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sell_token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "buy_token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint24",
+						"name": "maker_index",
+						"type": "uint24"
+					}
+				],
+				"name": "cancelMaker",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tkn",
+						"type": "address"
+					}
+				],
+				"name": "decimals",
+				"outputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "epochspan",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sell_token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "buy_token",
+						"type": "address"
+					}
+				],
+				"name": "getAllOrders",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "sender",
+								"type": "address"
+							},
+							{
+								"internalType": "uint96",
+								"name": "amount",
+								"type": "uint96"
+							},
+							{
+								"internalType": "uint24",
+								"name": "prev",
+								"type": "uint24"
+							},
+							{
+								"internalType": "uint24",
+								"name": "next",
+								"type": "uint24"
+							},
+							{
+								"internalType": "uint24",
+								"name": "epoch",
+								"type": "uint24"
+							},
+							{
+								"internalType": "uint96",
+								"name": "balance",
+								"type": "uint96"
+							}
+						],
+						"internalType": "struct Single.Order[]",
+						"name": "takers",
+						"type": "tuple[]"
+					},
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "sender",
+								"type": "address"
+							},
+							{
+								"internalType": "uint96",
+								"name": "amount",
+								"type": "uint96"
+							},
+							{
+								"internalType": "uint24",
+								"name": "prev",
+								"type": "uint24"
+							},
+							{
+								"internalType": "uint24",
+								"name": "next",
+								"type": "uint24"
+							},
+							{
+								"internalType": "uint24",
+								"name": "epoch",
+								"type": "uint24"
+							},
+							{
+								"internalType": "uint96",
+								"name": "balance",
+								"type": "uint96"
+							}
+						],
+						"internalType": "struct Single.Order[]",
+						"name": "makers",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sell_token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "buy_token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint24",
+						"name": "epoch",
+						"type": "uint24"
+					}
+				],
+				"name": "getCanceledMakers",
+				"outputs": [
+					{
+						"internalType": "uint24[]",
+						"name": "",
+						"type": "uint24[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sell_token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "buy_token",
+						"type": "address"
+					}
+				],
+				"name": "getCounts",
+				"outputs": [
+					{
+						"internalType": "uint96",
+						"name": "",
+						"type": "uint96"
+					},
+					{
+						"internalType": "uint96",
+						"name": "",
+						"type": "uint96"
+					},
+					{
+						"internalType": "uint96",
+						"name": "",
+						"type": "uint96"
+					},
+					{
+						"internalType": "uint96",
+						"name": "",
+						"type": "uint96"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sell_token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "buy_token",
+						"type": "address"
+					}
+				],
+				"name": "getEpoch",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "epoch_result",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sell_token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "buy_token",
+						"type": "address"
+					}
+				],
+				"name": "getMakerIndex",
+				"outputs": [
+					{
+						"internalType": "uint24",
+						"name": "",
+						"type": "uint24"
+					},
+					{
+						"internalType": "uint24",
+						"name": "",
+						"type": "uint24"
+					},
+					{
+						"internalType": "uint24",
+						"name": "",
+						"type": "uint24"
+					},
+					{
+						"internalType": "uint24",
+						"name": "",
+						"type": "uint24"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sell_token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "buy_token",
+						"type": "address"
+					}
+				],
+				"name": "getMakers",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint24",
+								"name": "index",
+								"type": "uint24"
+							},
+							{
+								"internalType": "address",
+								"name": "sender",
+								"type": "address"
+							},
+							{
+								"internalType": "uint96",
+								"name": "amount",
+								"type": "uint96"
+							},
+							{
+								"internalType": "uint24",
+								"name": "prev",
+								"type": "uint24"
+							},
+							{
+								"internalType": "uint24",
+								"name": "next",
+								"type": "uint24"
+							},
+							{
+								"internalType": "uint96",
+								"name": "balance",
+								"type": "uint96"
+							},
+							{
+								"internalType": "uint24",
+								"name": "epoch",
+								"type": "uint24"
+							}
+						],
+						"internalType": "struct Single.MakerEndpoint[]",
+						"name": "active_makers",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sell_token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "buy_token",
+						"type": "address"
+					}
+				],
+				"name": "getSums",
+				"outputs": [
+					{
+						"internalType": "uint96",
+						"name": "",
+						"type": "uint96"
+					},
+					{
+						"internalType": "uint96",
+						"name": "",
+						"type": "uint96"
+					},
+					{
+						"internalType": "uint96",
+						"name": "",
+						"type": "uint96"
+					},
+					{
+						"internalType": "uint96",
+						"name": "",
+						"type": "uint96"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sell_token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "buy_token",
+						"type": "address"
+					}
+				],
+				"name": "getTakerIndex",
+				"outputs": [
+					{
+						"internalType": "uint24",
+						"name": "",
+						"type": "uint24"
+					},
+					{
+						"internalType": "uint24",
+						"name": "",
+						"type": "uint24"
+					},
+					{
+						"internalType": "uint24",
+						"name": "",
+						"type": "uint24"
+					},
+					{
+						"internalType": "uint24",
+						"name": "",
+						"type": "uint24"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sell_token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "buy_token",
+						"type": "address"
+					}
+				],
+				"name": "getTakers",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint24",
+								"name": "index",
+								"type": "uint24"
+							},
+							{
+								"internalType": "address",
+								"name": "sender",
+								"type": "address"
+							},
+							{
+								"internalType": "uint96",
+								"name": "amount",
+								"type": "uint96"
+							},
+							{
+								"internalType": "uint24",
+								"name": "next",
+								"type": "uint24"
+							},
+							{
+								"internalType": "uint24",
+								"name": "epoch",
+								"type": "uint24"
+							}
+						],
+						"internalType": "struct Single.TakerEndpoint[]",
+						"name": "active_takers",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint96",
+						"name": "tkr0_sum",
+						"type": "uint96"
+					},
+					{
+						"internalType": "uint96",
+						"name": "mkr0_sum",
+						"type": "uint96"
+					},
+					{
+						"internalType": "uint96",
+						"name": "tkr1_sum",
+						"type": "uint96"
+					},
+					{
+						"internalType": "uint96",
+						"name": "mkr1_sum",
+						"type": "uint96"
+					}
+				],
+				"name": "get_demands",
+				"outputs": [
+					{
+						"internalType": "uint96",
+						"name": "tkr0_demand",
+						"type": "uint96"
+					},
+					{
+						"internalType": "uint96",
+						"name": "mkr0_demand",
+						"type": "uint96"
+					},
+					{
+						"internalType": "uint96",
+						"name": "tkr1_demand",
+						"type": "uint96"
+					},
+					{
+						"internalType": "uint96",
+						"name": "mkr1_demand",
+						"type": "uint96"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "max_count",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "max_epochs",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sell_token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "buy_token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint96",
+						"name": "_quantity",
+						"type": "uint96"
+					}
+				],
+				"name": "placeMaker",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sell_token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "buy_token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint96",
+						"name": "_quantity",
+						"type": "uint96"
+					}
+				],
+				"name": "placeTaker",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sell_token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "buy_token",
+						"type": "address"
+					}
+				],
+				"name": "send",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"errors": {
+				"ReentrancyGuardReentrantCall()": [
+					{
+						"details": "Unauthorized reentrant call."
+					}
+				]
+			},
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Smart-Contracts-main-2/contracts/SingleChain/SingleChain.sol": "Spoke"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Smart-Contracts-main-2/contracts/SingleChain/IERC20_.sol": {
+			"keccak256": "0x31ada4fc781060d2cf18c6a76bdafbeaa3808f7c2d8a122ff3c1348cf86e1092",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://93bb4b786e8a7698dbdc1ce1ea8c96d25298864336157132b690c3377b9b3ca8",
+				"dweb:/ipfs/QmQPL8MMkEC221DhGaxzHpHDEZaUrHMhQ6HuPkUgaWdcBi"
+			]
+		},
+		"Smart-Contracts-main-2/contracts/SingleChain/InterfaceSingleChain.sol": {
+			"keccak256": "0x87021951a6a28db69570338d8f8f0db9735798ad9ea3c6d19aee5a1534b4a3c0",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://479f1f8abbdccbe755427c8ddc4c917b6cb6e8014a2635e34c26c1cc2597748b",
+				"dweb:/ipfs/QmQh9KBbSXHpFJ6WqKRQ3EjLdZZXiA1YMJEvXS289W3Rey"
+			]
+		},
+		"Smart-Contracts-main-2/contracts/SingleChain/ReentrancyGuard.sol": {
+			"keccak256": "0x3732a6b2d1083cc0250e7dc0e1a3ade6f01dd1c9f7896d40a694a30ddbfa863d",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://18698938f7836e233c05520ad4bbaa7cd0f905d893bf5201c931709687fcf84c",
+				"dweb:/ipfs/QmRdkcyEXNkEhL9nQZNZW2ubjtdFZ9UDeVhdYwnz1BPRLA"
+			]
+		},
+		"Smart-Contracts-main-2/contracts/SingleChain/SingleChain.sol": {
+			"keccak256": "0x78be7ffa407e3cfa083229fc5872959fc5ff9bd9ac45c984940fa7f411c0de54",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://98862d4f8b3876ab9e9589e791c1379aaf68bbdcfe8d32f95d16f9001e8fab1f",
+				"dweb:/ipfs/QmbasgWgxQay8NWpaPap3wpmXiB5GUdpeEGHAJLmmrUDD3"
+			]
+		}
+	},
+	"version": 1
+}
